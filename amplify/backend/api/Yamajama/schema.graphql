@@ -1,0 +1,14 @@
+type Moments @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  when: AWSDateTime
+  notes: String
+  value: Int
+  goalsID: ID! @index(name: "byGoals")
+}
+
+type Goals @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  notes: String
+  Moments: [Moments] @hasMany(indexName: "byGoals", fields: ["id"])
+}
